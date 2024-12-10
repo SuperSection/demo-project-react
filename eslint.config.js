@@ -57,7 +57,9 @@ export default tseslint.config(
     rules: {
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': ['off', { allowConstantExport: true }],
+      '@typescript-eslint/no-empty-object-type': 'off',
 
+      'import/named': 'off',
       'import/order': [
         'error',
         {
