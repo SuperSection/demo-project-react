@@ -8,19 +8,29 @@ import authReducer from './slices/auth.slice';
 import registrationFormReducer from './slices/registration-form.slice';
 import { refreshUserMiddleware } from './middleware/refresh-user.middleware';
 
-const persistConfig = {
+const authPersistConfig = {
   key: 'auth',
   version: 1,
   storage: storage, // Use local storage
   whitelist: ['accessToken', 'refreshToken'],
 };
 
-const persistedReducer = persistReducer(persistConfig, authReducer);
+const registrationPersistConfig = {
+  key: 'registration',
+  version: 1,
+  storage: storage,
+};
+
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
+const persistedRegistrationReducer = persistReducer(
+  registrationPersistConfig,
+  registrationFormReducer,
+);
 
 export const store = configureStore({
   reducer: {
-    auth: persistedReducer,
-    registration: registrationFormReducer,
+    auth: persistedAuthReducer,
+    registration: persistedRegistrationReducer,
     [authApi.reducerPath]: authApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
   },

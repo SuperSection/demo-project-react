@@ -1,3 +1,4 @@
+import { Navigate } from 'react-router';
 import { useLayoutEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
@@ -37,8 +38,13 @@ import {
 } from '@/schema/user.schema';
 import { UpdateMobileNumberData, UpdateNameData, UpdatePasswordData } from '@/types/user.type';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useToast } from '@/helpers/hooks/use-toast';
+import { Role } from '@/types/auth.type';
+import { APP_URL } from '@/config/appPaths';
 
 const UserProfile = () => {
+  const { toast } = useToast();
+
   const user = useUser();
 
   const dispatch = useAppDispatch();
@@ -83,19 +89,66 @@ const UserProfile = () => {
   };
 
   const handleSaveName = async (data: UpdateNameData) => {
-    await updateName(data.name);
-    setDialogOpen(false);
+    try {
+      await updateName(data.name);
+      toast({
+        title: 'Name Updated',
+        description: 'Your name has been updated successfully.',
+      });
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: 'Failed to update name',
+        description: 'An error occurred while updating your name.',
+        variant: 'destructive',
+      });
+    } finally {
+      setDialogOpen(false);
+    }
   };
 
   const handleSaveMobile = async (data: UpdateMobileNumberData) => {
-    await updateMobile(`${data.countryCode}-${data.mobile}`);
-    setDialogOpen(false);
+    try {
+      await updateMobile(`${data.countryCode}-${data.mobile}`);
+      toast({
+        title: 'Mobile Number Updated',
+        description: 'Your mobile number has been updated successfully.',
+      });
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: 'Failed to update mobile number',
+        description: 'An error occurred while updating your mobile number.',
+        variant: 'destructive',
+      });
+    } finally {
+      setDialogOpen(false);
+    }
   };
 
   const handleUpdatePassword = async (data: UpdatePasswordData) => {
-    await updatePassword(data);
-    setPasswordDialogOpen(false);
+    try {
+      await updatePassword(data);
+      toast({
+        title: 'Password Updated',
+        description: 'Your password has been updated successfully.',
+      });
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: 'Failed to update password',
+        description: 'An error occurred while updating your password.',
+        variant: 'destructive',
+      });
+    } finally {
+      setPasswordDialogOpen(false);
+    }
   };
+
+  
+  if (user?.role === Role.ASSOCIATE) {
+    return <Navigate to={APP_URL.address} />;
+  }
 
   if (!user) {
     // Render the skeleton while user data is being fetched

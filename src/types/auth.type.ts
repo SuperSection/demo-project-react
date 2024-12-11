@@ -1,8 +1,15 @@
+export enum Role {
+  SUPER_ADMIN = 'SUPER_ADMIN',
+  ADMIN = 'ADMIN',
+  ASSOCIATE = 'ASSOCIATE',
+}
+
 export interface UserData {
   name: string;
   email: string;
   mobile: string;
   password: string;
+  role?: Role;
 }
 
 export interface AddressData {

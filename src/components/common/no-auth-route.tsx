@@ -8,7 +8,7 @@ export default function UnauthenticatedRoute() {
   const auth = useAppSelector((state) => state.auth);
 
   if (auth.accessToken || auth.refreshToken) {
-    return <Navigate to={APP_URL.profile} />;
+    return <Navigate to={APP_URL.address} />;
   }
 
   return <Outlet />;

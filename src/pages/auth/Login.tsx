@@ -1,5 +1,6 @@
+import { APP_URL } from '@/config/appPaths';
 import LoginForm from './_components/LoginForm';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
 const Login = () => {
   return (
@@ -11,6 +12,14 @@ const Login = () => {
         <CardContent>
           <LoginForm />
         </CardContent>
+        <CardFooter>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Don't have an account?{' '}
+            <a href={APP_URL.register} className="text-blue-500 hover:underline">
+              Register
+            </a>
+          </p>
+        </CardFooter>
       </Card>
     </div>
   );

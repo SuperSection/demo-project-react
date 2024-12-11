@@ -12,8 +12,11 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import UserDetailsForm from './_components/UserDetailsForm';
 import AddressForm from './_components/AddressForm';
+import { useToast } from '@/helpers/hooks/use-toast';
 
 const Registration = () => {
+  const { toast } = useToast();
+
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -28,7 +31,7 @@ const Registration = () => {
   });
   // const [addressData, setAddressData] = useState<AddressData[]>([]);
 
-  const [register, { isLoading, isError, error }] = useRegisterMutation();
+  const [register, { isLoading, error }] = useRegisterMutation();
 
   const handleUserDataSubmit = (data: UserData) => {
     setUserData((prev) => ({ ...prev, ...data }));
@@ -44,9 +47,20 @@ const Registration = () => {
     try {
       const response = await register(finalData).unwrap();
       console.log('Registration Success:', response);
+      toast({
+        title: 'Registered Successful',
+        description: 'You have successfully registered!',
+      });
+
       navigate(APP_URL.login);
-    } catch (error) {
+    } catch (err: any) {
       console.error('Registration Failed:', error);
+      toast({
+        title: 'Registration Failed',
+        description: err?.data?.message || 'An error occurred during registration process.',
+        variant: 'destructive',
+      });
+      
       navigate(APP_URL.register);
     } finally {
       dispatch(resetForm());
@@ -65,13 +79,18 @@ const Registration = () => {
           {step === 1 && <UserDetailsForm onNext={handleUserDataSubmit} />}
           {step === 2 && <AddressForm onSubmit={handleAddressDataSubmit} />}
         </CardContent>
-        <CardFooter>
+        <CardFooter className='flex items-center justify-between'>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Already have an account?{' '}
+            <a href={APP_URL.login} className="text-blue-500 hover:underline">
+              Login
+            </a>
+          </p>
           {step === 2 && (
             <Button variant="outline" onClick={goBack} disabled={isLoading}>
               Back
             </Button>
           )}
-          {isError && <p className="text-red-500 text-sm mt-2">{(error as any)?.data?.message}</p>}
         </CardFooter>
       </Card>
     </div>

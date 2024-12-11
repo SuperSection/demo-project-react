@@ -1,8 +1,10 @@
+import { useLocation } from 'react-router';
 import { Home, Settings } from 'lucide-react';
 
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -11,6 +13,7 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { APP_URL } from '@/config/appPaths';
+import LogoutButton from '@/pages/user/_components/LogoutButton';
 
 // Menu items.
 const items = [
@@ -27,15 +30,20 @@ const items = [
 ];
 
 export function AppSidebar() {
+  const location = useLocation();
+
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar collapsible="offcanvas">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Demo Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem
+                  key={item.title}
+                  className={location.pathname === item.url ? 'bg-neutral-600/30 rounded-md' : ''}
+                >
                   <SidebarMenuButton asChild>
                     <a href={item.url}>
                       <item.icon />
@@ -48,6 +56,9 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <LogoutButton />
+      </SidebarFooter>
     </Sidebar>
   );
 }

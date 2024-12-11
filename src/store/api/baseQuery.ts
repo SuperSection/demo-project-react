@@ -34,7 +34,7 @@ export const baseQueryWithRetry: BaseQueryFn<
 
   if (
     result.error &&
-    (result.error.status === 401 || result.error?.data?.code === 'TOKEN_EXPIRED')
+    (result.error.status === 401 || result.error.data?.code === 'TOKEN_EXPIRED')
   ) {
     // Attempt to refresh the token
     const refreshToken = (api.getState() as RootState).auth.refreshToken;

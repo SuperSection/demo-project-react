@@ -48,7 +48,14 @@ export default function AddressForm({ onSubmit }: { onSubmit: (data: AddressData
   };
 
   const handleRemoveAddress = (index: number) => {
+    // Remove the address from the form
     remove(index);
+
+    // Get the updated address list from form values
+    const updatedAddresses = form.getValues('address').filter((_, i) => i !== index);
+
+    // Update the Redux state
+    dispatch(saveAddress(updatedAddresses));
   };
 
   // Watch form values to save them on change

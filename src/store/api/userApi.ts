@@ -91,7 +91,8 @@ export const userApi = createApi({
         method: 'POST',
         body: { token },
       }),
-      onQueryStarted(_arg, { dispatch }) {
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        await queryFulfilled;
         dispatch(clearTokens());
       },
     }),

@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Separator } from '@/components/ui/separator';
 
 const AddressInfo = () => {
   const user = useUser();
@@ -74,78 +75,84 @@ const AddressInfo = () => {
 
   return (
     <div className="p-8 w-[640px] min-h-screen mx-auto">
-      <Card className="">
+      <Card className=''>
         <CardHeader>
           <CardTitle className="text-2xl">📍 Manage Your Addresses</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             {user.address.map((address: AddressData, index: number) => (
-              <div key={address.id} className="flex items-end justify-between">
-                <div className="flex flex-col space-y-3">
-                  <div>
-                    <Label htmlFor={`address-${index}-addressLine`}>Address Line {index + 1}</Label>
-                    <Input
-                      id={`address-${index}-addressLine`}
-                      value={address.addressLine}
-                      readOnly
-                      className="cursor-not-allowed"
-                    />
+              <>
+                <Separator className="mb-5 mt-2" />
+                <div key={address.id} className="flex justify-between mt-3">
+                  <div className="flex flex-col space-y-3">
+                    <div>
+                      <Label htmlFor={`address-${index}-addressLine`}>
+                        Address Line {index + 1}
+                      </Label>
+                      <Input
+                        id={`address-${index}-addressLine`}
+                        value={address.addressLine}
+                        readOnly
+                        className="cursor-not-allowed w-fit"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor={`address-${index}-landmark`}>Landmark</Label>
+                      <Input
+                        id={`address-${index}-landmark`}
+                        value={address.landmark}
+                        readOnly
+                        className="cursor-not-allowed w-fit"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor={`address-${index}-city`}>City</Label>
+                      <Input
+                        id={`address-${index}-city`}
+                        value={address.city}
+                        readOnly
+                        className="cursor-not-allowed w-fit"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor={`address-${index}-pin`}>Pin</Label>
+                      <Input
+                        id={`address-${index}-pin`}
+                        value={address.pin}
+                        readOnly
+                        className="cursor-not-allowed w-fit"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor={`address-${index}-state`}>State</Label>
+                      <Input
+                        id={`address-${index}-state`}
+                        value={address.state}
+                        readOnly
+                        className="cursor-not-allowed w-fit"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor={`address-${index}-country`}>Country</Label>
+                      <Input
+                        id={`address-${index}-country`}
+                        value={address.country}
+                        readOnly
+                        className="cursor-not-allowed w-fit"
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <Label htmlFor={`address-${index}-landmark`}>Landmark</Label>
-                    <Input
-                      id={`address-${index}-landmark`}
-                      value={address.landmark}
-                      readOnly
-                      className="cursor-not-allowed"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor={`address-${index}-city`}>City</Label>
-                    <Input
-                      id={`address-${index}-city`}
-                      value={address.city}
-                      readOnly
-                      className="cursor-not-allowed"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor={`address-${index}-pin`}>Pin</Label>
-                    <Input
-                      id={`address-${index}-pin`}
-                      value={address.pin}
-                      readOnly
-                      className="cursor-not-allowed"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor={`address-${index}-state`}>State</Label>
-                    <Input
-                      id={`address-${index}-state`}
-                      value={address.state}
-                      readOnly
-                      className="cursor-not-allowed"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor={`address-${index}-country`}>Country</Label>
-                    <Input
-                      id={`address-${index}-country`}
-                      value={address.country}
-                      readOnly
-                      className="cursor-not-allowed"
-                    />
-                  </div>
+                  <Button
+                    className=""
+                    onClick={() => {
+                      handleUpdateAddress(address);
+                    }}
+                  >
+                    Update Address {index + 1}
+                  </Button>
                 </div>
-                <Button
-                  onClick={() => {
-                    handleUpdateAddress(address);
-                  }}
-                >
-                  Update Address {index + 1}
-                </Button>
-              </div>
+              </>
             ))}
           </div>
         </CardContent>

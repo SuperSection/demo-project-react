@@ -1,19 +1,23 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { yupResolver } from '@hookform/resolvers/yup';
 
+import { APP_URL } from '@/config/appPaths';
+import { useAppDispatch } from '@/store/hooks';
+import { resetForm } from '@/store/slices/registration-form.slice';
 import { LoginFormValues, loginSchema } from '@/schema/auth.schema';
 import { useLoginMutation } from '@/store/api/authApi';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/helpers/hooks/use-toast';
 import { Form, FormControl, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { APP_URL } from '@/config/appPaths';
+import { useToast } from '@/helpers/hooks/use-toast';
 
 const LoginForm = () => {
   const { toast } = useToast();
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
@@ -36,8 +40,7 @@ const LoginForm = () => {
         description: 'You have successfully logged in!',
       });
 
-      navigate(APP_URL.profile);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      navigate(APP_URL.address);
     } catch (err: any) {
       console.error('Login error:', err);
       toast({
@@ -46,6 +49,8 @@ const LoginForm = () => {
         variant: 'destructive',
       });
       form.setValue('password', '');
+    } finally {
+      dispatch(resetForm());
     }
   };
 
