@@ -145,7 +145,6 @@ const UserProfile = () => {
     }
   };
 
-  
   if (user?.role === Role.ASSOCIATE) {
     return <Navigate to={APP_URL.address} />;
   }

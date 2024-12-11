@@ -60,7 +60,7 @@ const Registration = () => {
         description: err?.data?.message || 'An error occurred during registration process.',
         variant: 'destructive',
       });
-      
+
       navigate(APP_URL.register);
     } finally {
       dispatch(resetForm());
@@ -79,7 +79,7 @@ const Registration = () => {
           {step === 1 && <UserDetailsForm onNext={handleUserDataSubmit} />}
           {step === 2 && <AddressForm onSubmit={handleAddressDataSubmit} />}
         </CardContent>
-        <CardFooter className='flex items-center justify-between'>
+        <CardFooter className="flex items-center justify-between">
           <p className="text-sm text-gray-500 dark:text-gray-400">
             Already have an account?{' '}
             <a href={APP_URL.login} className="text-blue-500 hover:underline">

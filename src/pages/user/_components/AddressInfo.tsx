@@ -54,7 +54,7 @@ const AddressInfo = () => {
   if (!user) {
     return (
       <div className="p-8 w-[640px] min-h-screen mx-auto">
-        <Card className="">
+        <Card>
           <CardHeader>
             <CardTitle className="text-2xl">📍 Manage Your Addresses</CardTitle>
           </CardHeader>
@@ -75,7 +75,7 @@ const AddressInfo = () => {
 
   return (
     <div className="p-8 w-[640px] min-h-screen mx-auto">
-      <Card className=''>
+      <Card className="">
         <CardHeader>
           <CardTitle className="text-2xl">📍 Manage Your Addresses</CardTitle>
         </CardHeader>
